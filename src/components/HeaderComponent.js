@@ -8,7 +8,7 @@ class Header extends Component {
         super(props);
 
         this.toggleNav = this.toggleNav.bind(this);
-        this.state= {
+        this.state = {
             isNavOpen: false
         };
     }
