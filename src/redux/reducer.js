@@ -3,8 +3,8 @@ import { COMMENTS } from '../shared/comments';
 import { PARTNERS } from '../shared/partners';
 import { PROMOTIONS } from '../shared/promotions';
 
-export const initialState ={
-    campsite: CAMPSITES,
+export const initialState = {
+    campsites: CAMPSITES,
     comments: COMMENTS,
     partners: PARTNERS,
     promotions: PROMOTIONS
