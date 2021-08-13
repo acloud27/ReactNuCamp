@@ -79,12 +79,12 @@ export const addComments = comments => ({
     payload: comments
 });
 
-export const addComment = comment => ({
+export const addComment = comment => ({//update local redux store
     type: ActionTypes.ADD_COMMENT,
     payload: comment
 });
 
-export const postComment = (campsiteId, rating, author, text) => dispatch => {
+export const postComment = (campsiteId, rating, author, text) => dispatch => {//thunked asyncronise call to fetch
     
     const newComment = {
         campsiteId: campsiteId,
@@ -95,10 +95,12 @@ export const postComment = (campsiteId, rating, author, text) => dispatch => {
     newComment.date = new Date().toISOString();
 
     return fetch(baseUrl + 'comments', {
-            method: "POST",
-            body: JSON.stringify(newComment),
+            //optional second agrument passed as object
+            method: "POST",//specifices request method (default is "GET")
+            body: JSON.stringify(newComment),//json encoded version of object newComment above
             headers: {
-                "Content-Type": "application/json"
+            //needs to be object to hold 1/more headers
+                "Content-Type": "application/json"//server knows to expect body to be formated as json
             }
         })
         .then(response => {
@@ -110,12 +112,13 @@ export const postComment = (campsiteId, rating, author, text) => dispatch => {
                     throw error;
                 }
             },
-            error => { throw error; }
+            error => { throw error; }//throws to next catch block
         )
         .then(response => response.json())
         .then(response => dispatch(addComment(response)))
         .catch(error => {
             console.log('post comment', error.message);
+            //post comment to let us know err coming from post comment action creator
             alert('Your comment could not be posted\nError: ' + error.message);
         });
 };
