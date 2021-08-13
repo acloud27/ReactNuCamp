@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { baseUrl } from '../shared/baseUrl';
 import { Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem,
     Button, Modal, ModalHeader, ModalBody, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -13,7 +14,7 @@ function RenderCampsite({campsite}) {
     return (
         <div className="col-md-5 m-1">
             <Card>
-                <CardImg top src={campsite.image} alt={campsite.name} />
+                <CardImg top src={baseUrl + campsite.image} alt={campsite.name} />
                 <CardBody>
                     <CardText>{campsite.description}</CardText>
                 </CardBody>
