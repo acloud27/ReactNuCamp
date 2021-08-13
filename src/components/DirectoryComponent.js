@@ -1,10 +1,11 @@
 import React from 'react';
-import { baseUrl } from '../shared/baseUrl';
 import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+//const that holds address for json-server used instead of client side by CardImg
 
-function RenderDirectoryItem({campsite}) {
+function RenderDirectoryItem({campsite}) { 
     return (
         <Card>
             <Link to={`/directory/${campsite.id}`}>

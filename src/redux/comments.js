@@ -10,9 +10,9 @@ export const Comments = (state = { errMess: null, comments: []}, action) => {
 
         case ActionTypes.ADD_COMMENT:
             const comment = action.payload;
-            comment.id = state.length;
+            comment.id = state.comments.length;//state stored in state.comments object (state.length fine if state just simple array)
             comment.date = new Date().toISOString();
-            return state.concat(comment);
+            return {...state, comments: state.comments.concat(comment)};//spread and then update (concat if simple array)
             
         default:
             return state;

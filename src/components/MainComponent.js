@@ -27,14 +27,17 @@ const mapDispatchToProps = {
     resetFeedbackForm: () => (actions.reset('feedbackForm')),
     fetchComments: () => (fetchComments()),
     fetchPromotions: () => (fetchPromotions())
+    //value => that calls fetch action creator
+    //setting up mapDispatchToProps like this makes it easy dispatch actions to redux store
 };
 
 class Main extends Component {
 
-    componentDidMount() {
+    componentDidMount() {//lifecycle method
         this.props.fetchCampsites();
         this.props.fetchComments();
         this.props.fetchPromotions();
+        //action creators added so that fetch works when component mounted
     }
 
     render() {
@@ -42,9 +45,11 @@ class Main extends Component {
             return (
                 <Home
                     campsite={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]}
+                    //1 campsites points to object campsites 2 points to array campsites inside object
                     campsitesLoading={this.props.campsites.isLoading}
                     campsitesErrMess={this.props.campsites.errMess}
                     promotion={this.props.promotions.promotions.filter(promotion => promotion.featured)[0]}
+                    //1 promotions points to object promotions 2 promotion points array inside object
                     promotionLoading={this.props.promotions.isLoading}
                     promotionErrMess={this.props.promotions.errMess}
                     partner={this.props.partners.filter(partner => partner.featured)[0]}
@@ -59,6 +64,7 @@ class Main extends Component {
                     isLoading={this.props.campsites.isLoading}
                     errMess={this.props.campsites.errMess}
                     comments={this.props.comments.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+                    //1 comments points to object comments 2 comments points to array comments inside object
                     commentsErrMess={this.props.comments.errMess}
                     addComment={this.props.addComment}
                 />
