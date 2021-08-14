@@ -159,3 +159,74 @@ export const addPromotions = promotions => ({
     type: ActionTypes.ADD_PROMOTIONS,
     payload: promotions
 });
+
+export const fetchPartners = () => dispatch => {//thunked
+    dispatch(partnersLoading());//call to dispatch
+
+    return fetch(baseUrl + 'partners')//call to fetch
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message);
+                throw errMess;
+            }
+        )
+        .then(response => response.json())//convert response to JS array
+        .then(partners => dispatch(addPartners(partners)))//adds to store
+        .catch(error => dispatch(partnersFailed(error.message)));
+};
+
+export const partnersLoading = () => ({
+    type: ActionTypes.PARTNERS_LOADING
+});
+
+export const partnersFailed = errMess => ({
+    type: ActionTypes.PARTNERS_FAILED,
+    payload: errMess
+});
+
+export const addPartners = partners => ({
+    type: ActionTypes.ADD_PARTNERS,
+    payload: partners
+});
+
+export const postFeedback = (feedback) => () => {//thunked asyncronise call to fetch
+
+    return fetch(baseUrl + 'feedback', {
+            //optional second agrument passed as object
+            method: "POST",//specifices request method (default is "GET")
+            body: JSON.stringify(feedback),//json encoded version of object newComment above
+            headers: {
+            //needs to be object to hold 1/more headers
+                "Content-Type": "application/json"//server knows to expect body to be formated as json
+            }
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => { throw error; }//throws to next catch block
+        )
+        .then(response => response.json())
+        .then(response => {
+            console.log('Feedback: ', response);
+            alert('Thank you for your feedback!\n' + JSON.stringify(response));
+        })
+        .catch(error => {
+            console.log('post comment', error.message);
+            //post comment to let us know err coming from post comment action creator
+            alert('Your comment could not be posted\nError: ' + error.message);
+        });
+};
