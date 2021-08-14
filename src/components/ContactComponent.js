@@ -34,8 +34,8 @@ class Contact extends Component {
     }
 
     handleSubmit(values) {
-        this.props.postFeedback(values);
-        this.props.resetFeedbackForm();
+        this.props.postFeedback(values);//gets from Route on Main Component
+        this.props.resetFeedbackForm();//also gets from Route Main Component
     }
 
     render() {

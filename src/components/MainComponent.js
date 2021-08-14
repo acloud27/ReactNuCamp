@@ -12,7 +12,7 @@ import { actions } from 'react-redux-form';
 import { postComment, postFeedback, fetchCampsites, fetchComments, fetchPromotions, fetchPartners } from '../redux/ActionCreators';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-const mapStateToProps = state => {
+const mapStateToProps = state => {//maps action creator into this.props
     return {
         campsites: state.campsites,
         comments: state.comments,

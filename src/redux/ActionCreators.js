@@ -200,7 +200,7 @@ export const addPartners = partners => ({
 export const postFeedback = (feedback) => () => {//thunked asyncronise call to fetch
 
     return fetch(baseUrl + 'feedback', {
-            //optional second agrument passed as object
+            //optional second agrument passed as object below
             method: "POST",//specifices request method (default is "GET")
             body: JSON.stringify(feedback),//json encoded version of object newComment above
             headers: {
@@ -208,12 +208,13 @@ export const postFeedback = (feedback) => () => {//thunked asyncronise call to f
                 "Content-Type": "application/json"//server knows to expect body to be formated as json
             }
         })
+        //each of these are callback functions
         .then(response => {
                 if (response.ok) {
                     return response;
                 } else {
                     const error = new Error(`Error ${response.status}: ${response.statusText}`);
-                    error.response = response;
+                    error.response = response;//this makes object include errMess as response
                     throw error;
                 }
             },
@@ -225,8 +226,9 @@ export const postFeedback = (feedback) => () => {//thunked asyncronise call to f
             alert('Thank you for your feedback!\n' + JSON.stringify(response));
         })
         .catch(error => {
-            console.log('post comment', error.message);
+            //console.error('feedback: ', error.message)
+            console.log('feedback: ', error.message);
             //post comment to let us know err coming from post comment action creator
-            alert('Your comment could not be posted\nError: ' + error.message);
+            alert('Your feedback could not be posted\nError: ' + error.message);
         });
 };
